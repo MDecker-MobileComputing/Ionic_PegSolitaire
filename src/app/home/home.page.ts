@@ -68,14 +68,28 @@ export class HomePage {
     }
   }
 
+  /**
+   * Event-Handler-Methode für Klick auf Spielstein.
+   */
   public onSpielsteinKlick(indexZeile: number, indexSpalte: number) {
 
     console.log(`Klick auf Spielstein: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
   }
 
+  /**
+   * Event-Handler-Methode für Klick auf leeres Spielfeld.
+   */
   public onLeerFeldKlick(indexZeile: number, indexSpalte: number) {
 
     console.log(`Klick auf leeres Feld: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
+  }
+
+  /**
+   * Event-Handler für Button "Neues Spiel" in Toolbar.
+   */
+  public onNeuesSpielButton() {
+
+    console.log("Klick auf Button >leeres Spiel<.");
   }
 
 }
