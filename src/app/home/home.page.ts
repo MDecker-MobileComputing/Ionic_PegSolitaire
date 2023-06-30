@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 
+import { AlertController, ToastController } from '@ionic/angular';
+
+import { Spielfeldindex } from '../spielfeldindex';
+
 /** Custom Enum für SpielFeldStatus. */
 enum Sfs {
 
@@ -41,19 +45,30 @@ export class HomePage {
    */
   public spielfeldArray : Sfs[][] = [[]];
 
-  /**
-   * Konstruktor, initialisiert Spielfeld.
-   */
+  /** Aktuelle Anzahl der Spielsteine auf dem Feld. */
+  public anzahlSpielsteine : number = 0;
 
-  constructor() {
+  /**
+   * Startposition eines Spielzugs, nämlich Feld mit Spielstein der "springen" soll;
+   * wenn Wert `null` dann wurde kein Spielzug gestartet. */
+  private startPosition : Spielfeldindex | null = null;
+
+  /**
+   * Konstruktor für Dependency Injection, initialisiert Spielfeld.
+   */
+  constructor(private alertController: AlertController,
+              private toastController: ToastController) {
 
     this.initialisiereSpielfeld();
   }
 
   /**
    * Spielfeld in Ausgangszustand versetzen. Kopiert `SPIELFELD_VORLAGE` in`spielfeldArray`.
+   * Auch die Variable `anzahlSpielsteine` wird neu gesetzt.
    */
   private initialisiereSpielfeld() {
+
+    this.anzahlSpielsteine = 0;
 
     this.spielfeldArray = new Array();
 
@@ -64,32 +79,85 @@ export class HomePage {
       for (let spalte = 0; spalte < this.SPIELFELD_VORLAGE[zeile].length; spalte++) {
 
         this.spielfeldArray[zeile][spalte] = this.SPIELFELD_VORLAGE[zeile][spalte];
+
+        if (this.SPIELFELD_VORLAGE[zeile][spalte] === Sfs.BESETZT) { this.anzahlSpielsteine ++; }
       }
     }
+
+    console.log(`Spielfeld wurde initialisiert, Anzahl Spielsteine: ${this.anzahlSpielsteine}`);
   }
 
   /**
-   * Event-Handler-Methode für Klick auf Spielstein.
+   * Event-Handler-Methode für Klick auf Spielstein für Start Spielzug.
    */
   public onSpielsteinKlick(indexZeile: number, indexSpalte: number) {
 
     console.log(`Klick auf Spielstein: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
+
+    if (this.startPosition) {
+
+      this.zeigeToast("Es wurde schon ein Startfeld gewählt.");
+      this.startPosition = null;
+
+    } else {
+
+      this.startPosition = new Spielfeldindex(indexZeile, indexSpalte);
+    }
   }
 
   /**
-   * Event-Handler-Methode für Klick auf leeres Spielfeld.
+   * Event-Handler-Methode für Klick auf leeres Spielfeld für Beendigung Spielzug.
    */
   public onLeerFeldKlick(indexZeile: number, indexSpalte: number) {
 
     console.log(`Klick auf leeres Feld: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
+
+    if (!this.startPosition) {
+
+      this.zeigeToast("Leeres Feld kann kein Startfeld sein.");
+
+    } else {
+
+      console.log("Sollte jetzt Gültigkeit Spielzug bestimmen.");
+    }
   }
 
   /**
    * Event-Handler für Button "Neues Spiel" in Toolbar.
    */
-  public onNeuesSpielButton() {
+  public async onNeuesSpielButton() {
 
-    console.log("Klick auf Button >leeres Spiel<.");
+
+    const jaButton = { text: "Ja",
+                       handler: () => { this.initialisiereSpielfeld(); }
+                     };
+
+    const neinButton = { text: "Nein",
+                         role: "Cancel"
+                       };
+
+    const alert = await this.alertController.create({
+      header: "Sicherheitsabfrage",
+      message: "Wollen Sie wirklich ein neues Spiel beginnen?",
+      backdropDismiss: false,
+      buttons: [ jaButton, neinButton ]
+    });
+    alert.present();
+  }
+
+  /**
+   * Hilfsmethode um Toast anzuzeigen.
+   * @param nachricht  Nachricht auf Toast.
+   */
+  private async zeigeToast(nachricht: string) {
+
+    const toast =
+          await this.toastController.create({
+              message : nachricht,
+              duration: 2000  // 2000 ms = 2 Sekunden
+          });
+
+    await toast.present();
   }
 
 }
