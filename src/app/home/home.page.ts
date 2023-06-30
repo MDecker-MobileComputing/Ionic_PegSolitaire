@@ -70,6 +70,7 @@ export class HomePage {
   private initialisiereSpielfeld() {
 
     this.anzahlSpielsteine = 0;
+    this.startPosition = null;
 
     this.spielfeldArray = new Array();
 
@@ -91,7 +92,7 @@ export class HomePage {
   /**
    * Event-Handler-Methode für Klick auf Spielstein für Start Spielzug.
    */
-  public onSpielsteinKlick(indexZeile: number, indexSpalte: number) {
+  public async onSpielsteinKlick(indexZeile: number, indexSpalte: number) {
 
     console.log(`Klick auf Spielstein: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
 
@@ -109,22 +110,20 @@ export class HomePage {
   /**
    * Event-Handler-Methode für Klick auf leeres Spielfeld für Beendigung Spielzug.
    */
-  public onLeerFeldKlick(indexZeile: number, indexSpalte: number) {
+  public async onLeerFeldKlick(indexZeile: number, indexSpalte: number) {
 
     console.log(`Klick auf leeres Feld: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
 
-    if (!this.startPosition) {
+    if (this.startPosition === null) {
 
       this.zeigeToast("Leeres Feld kann kein Startfeld sein.");
 
     } else {
 
-      console.log("Sollte jetzt Gültigkeit Spielzug bestimmen.");
-
       const zielPosition = new Spielfeldindex(indexZeile, indexSpalte);
 
       const uebersprungenPos = this.bestimmteUebersprungenePosition(this.startPosition, zielPosition);
-      if (!uebersprungenPos) {
+      if (uebersprungenPos === null) {
 
         this.zeigeToast("Ungültiger Zug.");
         this.startPosition = null;
