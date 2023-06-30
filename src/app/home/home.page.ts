@@ -46,6 +46,13 @@ export class HomePage {
    */
   public spielfeldArray : Sfs[][] = [[]];
 
+  /**
+   * Zweidim-Array für Bool-Werte: Die Werte steuern, ob die Buttons disabled sind oder nicht.
+   * Es ist nur der Start-Button für den aktuellen Zug disabled, es kann also höchstens ein
+   * `true`-Wert enthalten sein.
+   */
+  public disabledArray : boolean[][] = [[]];
+
   /** Aktuelle Anzahl der Spielsteine auf dem Feld. */
   public anzahlSpielsteine : number = 0;
 
@@ -70,23 +77,41 @@ export class HomePage {
   private initialisiereSpielfeld() {
 
     this.anzahlSpielsteine = 0;
-    this.startPosition = null;
 
     this.spielfeldArray = new Array();
+    this.disabledArray = new Array();
 
     for (let zeile = 0; zeile < this.SPIELFELD_VORLAGE.length; zeile++) {
 
-      this.spielfeldArray[zeile] = new Array();
+      this.spielfeldArray[ zeile ] = new Array();
+      this.disabledArray[ zeile]   = new Array();
 
       for (let spalte = 0; spalte < this.SPIELFELD_VORLAGE[zeile].length; spalte++) {
 
         this.spielfeldArray[zeile][spalte] = this.SPIELFELD_VORLAGE[zeile][spalte];
+        this.disabledArray[zeile][spalte]  = false;
 
         if (this.SPIELFELD_VORLAGE[zeile][spalte] === Sfs.BESETZT) { this.anzahlSpielsteine ++; }
       }
     }
 
+    this.resetStartPosition();
+
     console.log(`Spielfeld wurde initialisiert, Anzahl Spielsteine: ${this.anzahlSpielsteine}`);
+  }
+
+  /**
+   * Setzt Startposition nach erfolgreichem oder abgebrochenem Spielzug zurück
+   * (inkl. Array für disabled Button).
+   */
+  private resetStartPosition() {
+
+    if (this.startPosition !== null) {
+
+      this.disabledArray[this.startPosition.indexZeile][this.startPosition.indexSpalte] = false;
+    }
+
+    this.startPosition = null;
   }
 
   /**
@@ -99,11 +124,12 @@ export class HomePage {
     if (this.startPosition) {
 
       this.zeigeToast("Es wurde schon ein Startfeld gewählt.");
-      this.startPosition = null;
+      this.resetStartPosition();
 
     } else {
 
       this.startPosition = new Spielfeldindex(indexZeile, indexSpalte);
+      this.disabledArray[indexZeile][indexSpalte] = true;
     }
   }
 
@@ -126,7 +152,7 @@ export class HomePage {
       if (uebersprungenPos === null) {
 
         this.zeigeToast("Ungültiger Zug.");
-        this.startPosition = null;
+        this.resetStartPosition();
         return;
       }
 
@@ -138,7 +164,7 @@ export class HomePage {
       } else {
 
         console.log("Übersprungene Position enthält keinen Spielstein.");
-        this.startPosition = null;
+        this.resetStartPosition();
         this.zeigeToast("Ungültiger Zug.");
       }
     }
@@ -157,7 +183,7 @@ export class HomePage {
     this.spielfeldArray[uebersprungPos.indexZeile][uebersprungPos.indexSpalte] = Sfs.LEER;
     this.spielfeldArray[zielPos.indexZeile][zielPos.indexSpalte]               = Sfs.BESETZT;
 
-    this.startPosition = null;
+    this.resetStartPosition();
     this.anzahlSpielsteine--;
 
     if (this.anzahlSpielsteine === 1) {
