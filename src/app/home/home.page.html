@@ -9,7 +9,9 @@
   <ion-grid>
     <ion-row *ngFor="let zeile of spielfeldArray">
       <ion-col *ngFor="let element of zeile">
-        {{element}}
+        <span *ngIf="element===SfsEnum.KEIN_FELD"></span>
+        <span *ngIf="element===SfsEnum.BESETZT">{{ element }}</span>
+        <span *ngIf="element===SfsEnum.LEER">.</span>
       </ion-col>
     </ion-row>
   </ion-grid>

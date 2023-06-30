@@ -20,6 +20,8 @@ enum Sfs {
 })
 export class HomePage {
 
+  public readonly SfsEnum : typeof Sfs = Sfs;
+
   /** Zweidimensionaler Array mit Vorlage für initialer Spielfieldzustand. */
   private readonly SPIELFELD_VORLAGE : Sfs[][] =
   [
@@ -35,6 +37,9 @@ export class HomePage {
   /** Zweidimensionaler Array mit Vorlage für initialer Spielfieldzustand. */
   public spielfeldArray : Sfs[][] = [[]];
 
+  /**
+   * Konstruktor, initialisiert Spielfeld.
+   */
   constructor() {
 
     this.initialisiereSpielfeld();
