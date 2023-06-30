@@ -147,6 +147,8 @@ export class HomePage {
 
   /**
    * Führt Sprung durch. Diese Methode darf nur für gültige Züge aufgerufen werden!
+   * Es wird auch überprüft, ob das Spiel gewonnen wurde, also nur ein Stein übrigt
+   * ist.
    */
   private sprungDurchfuehren( startPos: Spielfeldindex,
                               uebersprungPos: Spielfeldindex,
@@ -158,6 +160,11 @@ export class HomePage {
 
     this.startPosition = null;
     this.anzahlSpielsteine--;
+
+    if (this.anzahlSpielsteine === 1) {
+
+      this.zeigeDialog("Erfolg", "Sie haben das Spiel gewonnen!");
+    }
   }
 
   /**
@@ -191,7 +198,7 @@ export class HomePage {
    *          kein gültiger Zug.
    */
   private bestimmteUebersprungenePosition( start: Spielfeldindex,
-                                           ziel : Spielfeldindex  ): Spielfeldindex | null {
+                                           ziel : Spielfeldindex ): Spielfeldindex | null {
 
     if (start.indexSpalte === ziel.indexSpalte) { // vertikaler Zug?
 
@@ -240,6 +247,24 @@ export class HomePage {
           });
 
     await toast.present();
+  }
+
+  /**
+   * Hilfsmethode um Dialog anzuzeigen
+   *
+   * @param titel Titel von Dialog
+   * @param nachricht  Nachricht auf Dialog
+   */
+  private async zeigeDialog(titel: string, nachricht: string) {
+
+    const meinAlert =
+          await this.alertController.create({
+              header  : titel,
+              message : nachricht,
+              buttons : [ "Ok" ]
+          });
+
+    await meinAlert.present();
   }
 
 }
