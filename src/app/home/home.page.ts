@@ -20,6 +20,7 @@ enum Sfs {
 })
 export class HomePage {
 
+  /** Enum für Status von Spielfeldwerten auch in HTML-Datei sichtbar machen. */
   public readonly SfsEnum : typeof Sfs = Sfs;
 
   /** Zweidimensionaler Array mit Vorlage für initialer Spielfieldzustand. */
@@ -34,7 +35,10 @@ export class HomePage {
       [ Sfs.KEIN_FELD, Sfs.KEIN_FELD, Sfs.BESETZT, Sfs.BESETZT, Sfs.BESETZT, Sfs.KEIN_FELD, Sfs.KEIN_FELD ]
   ];
 
-  /** Zweidimensionaler Array mit Vorlage für initialer Spielfieldzustand. */
+  /**
+   * Zweidimensionaler Array mit Vorlage für initialer Spielfieldzustand.
+   * Wird in Methode `initialisiereSpielfeld()` gefüllt.
+   */
   public spielfeldArray : Sfs[][] = [[]];
 
   /**
