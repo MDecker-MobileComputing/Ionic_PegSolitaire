@@ -44,6 +44,7 @@ export class HomePage {
   /**
    * Konstruktor, initialisiert Spielfeld.
    */
+
   constructor() {
 
     this.initialisiereSpielfeld();
@@ -65,6 +66,16 @@ export class HomePage {
         this.spielfeldArray[zeile][spalte] = this.SPIELFELD_VORLAGE[zeile][spalte];
       }
     }
+  }
+
+  public onSpielsteinKlick(indexZeile: number, indexSpalte: number) {
+
+    console.log(`Klick auf Spielstein: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
+  }
+
+  public onLeerFeldKlick(indexZeile: number, indexSpalte: number) {
+
+    console.log(`Klick auf leeres Feld: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
   }
 
 }

@@ -7,22 +7,21 @@
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <ion-grid>
-    <ion-row *ngFor="let zeile of spielfeldArray">
-      <ion-col *ngFor="let element of zeile">
+    <ion-row *ngFor="let zeile of spielfeldArray, index as indexZeile">
+      <ion-col *ngFor="let element of zeile, , index as indexSpalte">
         <div [ngSwitch]="element">
 
           <span *ngSwitchCase="SfsEnum.KEIN_FELD"></span>
 
-          <ion-icon *ngSwitchCase="SfsEnum.BESETZT"
-                    size="large"
-                    name="square"
-                    class="rot">
-          </ion-icon>
+          <ion-button *ngSwitchCase="SfsEnum.BESETZT"
+                      expand="full"
+                      color="danger"
+                      (click)="onSpielsteinKlick(indexZeile, indexSpalte)"></ion-button>
 
-          <ion-icon *ngSwitchCase="SfsEnum.LEER"
-                    size="large"
-                    name="square-outline">
-          </ion-icon>
+          <ion-button *ngSwitchCase="SfsEnum.LEER"
+                      expand="full"
+                      color="dark"
+                      (click)="onLeerFeldKlick(indexZeile, indexSpalte)"></ion-button>
 
           <span *ngSwitchDefault>???</span>
 
