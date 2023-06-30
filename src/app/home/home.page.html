@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Peg Solitaire</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid>
+    <ion-row *ngFor="let zeile of spielfeldArray">
+      <ion-col *ngFor="let element of zeile">
+        {{element}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

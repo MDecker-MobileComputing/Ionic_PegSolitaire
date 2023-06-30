@@ -1,0 +1,7 @@
+{
+  "name": "PegSolitaire",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
