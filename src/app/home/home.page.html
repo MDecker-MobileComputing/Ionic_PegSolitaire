@@ -9,12 +9,23 @@
   <ion-grid>
     <ion-row *ngFor="let zeile of spielfeldArray">
       <ion-col *ngFor="let element of zeile">
-
         <div [ngSwitch]="element">
+
           <span *ngSwitchCase="SfsEnum.KEIN_FELD"></span>
-          <span *ngSwitchCase="SfsEnum.BESETZT"  >X</span>
-          <span *ngSwitchCase="SfsEnum.LEER"     >.</span>
-          <span *ngSwitchDefault>?{{element}}?</span>
+
+          <ion-icon *ngSwitchCase="SfsEnum.BESETZT"
+                    size="large"
+                    name="square"
+                    style="color: red">
+          </ion-icon>
+
+          <ion-icon *ngSwitchCase="SfsEnum.LEER"
+                    size="large"
+                    name="square-outline">
+          </ion-icon>
+
+          <span *ngSwitchDefault>???</span>
+
         </div>
       </ion-col>
     </ion-row>
