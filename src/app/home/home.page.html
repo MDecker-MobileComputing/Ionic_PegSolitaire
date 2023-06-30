@@ -11,7 +11,7 @@
 
   <ion-grid>
     <ion-row *ngFor="let zeile of spielfeldArray, index as indexZeile">
-      <ion-col *ngFor="let element of zeile, , index as indexSpalte">
+      <ion-col *ngFor="let element of zeile, index as indexSpalte">
         <div [ngSwitch]="element">
 
           <span *ngSwitchCase="SfsEnum.KEIN_FELD"></span>
@@ -19,12 +19,12 @@
           <ion-button *ngSwitchCase="SfsEnum.BESETZT"
                       expand="full"
                       color="danger"
-                      (click)="onSpielsteinKlick(indexZeile, indexSpalte)"></ion-button>
+                      (click)="onSpielsteinKlick(indexZeile,indexSpalte)"></ion-button>
 
           <ion-button *ngSwitchCase="SfsEnum.LEER"
                       expand="full"
                       color="dark"
-                      (click)="onLeerFeldKlick(indexZeile, indexSpalte)"></ion-button>
+                      (click)="onLeerFeldKlick(indexZeile,indexSpalte)"></ion-button>
 
           <span *ngSwitchDefault>???</span>
 

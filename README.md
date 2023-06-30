@@ -11,6 +11,10 @@ See [this repository](https://github.com/MDecker-MobileComputing/Android_PegSoli
 
 <br>
 
+How to solve this game is described [here](https://www.wikihow.com/Win-the-Peg-Solitaire-Game-(English-Board)).
+
+<br>
+
 ----
 
 ## License ##

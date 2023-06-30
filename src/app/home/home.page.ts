@@ -4,17 +4,17 @@ import { AlertController, ToastController } from '@ionic/angular';
 
 import { Spielfeldindex } from '../spielfeldindex';
 
-/** Custom Enum für SpielFeldStatus. */
+
+/**
+ * Eigener Aufzählungstyp für SpielFeldStatus.
+ */
 enum Sfs {
 
-    /** Zellen im GridLayout außerhalb des Rands haben diesen Zustand. */
-    KEIN_FELD,
+    KEIN_FELD, /** Zellen im GridLayout außerhalb des Rands haben diesen Zustand. */
 
-    /** Spielfeld hat keinen Spielstein */
-    LEER,
+    LEER, /** Spielfeld hat keinen Spielstein */
 
-    /** Spielfeld hat einen Spielstein */
-    BESETZT
+    BESETZT /** Spielfeld hat einen Spielstein */
 }
 
 @Component({
@@ -40,8 +40,9 @@ export class HomePage {
   ];
 
   /**
-   * Zweidimensionaler Array mit Vorlage für initialer Spielfieldzustand.
+   * Zweidimensionaler Array mit Vorlage für initialer Spielfieldzustand;
    * Wird in Methode `initialisiereSpielfeld()` gefüllt.
+   * Erster Index ist Zeile, zweiter Index ist Spalte.
    */
   public spielfeldArray : Sfs[][] = [[]];
 
@@ -119,14 +120,50 @@ export class HomePage {
     } else {
 
       console.log("Sollte jetzt Gültigkeit Spielzug bestimmen.");
+
+      const zielPosition = new Spielfeldindex(indexZeile, indexSpalte);
+
+      const uebersprungenPos = this.bestimmteUebersprungenePosition(this.startPosition, zielPosition);
+      if (!uebersprungenPos) {
+
+        this.zeigeToast("Ungültiger Zug.");
+        this.startPosition = null;
+        return;
+      }
+
+      const statusUebersprungenePos = this.spielfeldArray[uebersprungenPos.indexZeile][uebersprungenPos.indexSpalte];
+      if (statusUebersprungenePos === Sfs.BESETZT) {
+
+        this.sprungDurchfuehren(this.startPosition, uebersprungenPos, zielPosition);
+
+      } else {
+
+        console.log("Übersprungene Position enthält keinen Spielstein.");
+        this.startPosition = null;
+        this.zeigeToast("Ungültiger Zug.");
+      }
     }
+  }
+
+  /**
+   * Führt Sprung durch. Diese Methode darf nur für gültige Züge aufgerufen werden!
+   */
+  private sprungDurchfuehren( startPos: Spielfeldindex,
+                              uebersprungPos: Spielfeldindex,
+                              zielPos: Spielfeldindex) {
+
+    this.spielfeldArray[startPos.indexZeile][startPos.indexSpalte]             = Sfs.LEER;
+    this.spielfeldArray[uebersprungPos.indexZeile][uebersprungPos.indexSpalte] = Sfs.LEER;
+    this.spielfeldArray[zielPos.indexZeile][zielPos.indexSpalte]               = Sfs.BESETZT;
+
+    this.startPosition = null;
+    this.anzahlSpielsteine--;
   }
 
   /**
    * Event-Handler für Button "Neues Spiel" in Toolbar.
    */
   public async onNeuesSpielButton() {
-
 
     const jaButton = { text: "Ja",
                        handler: () => { this.initialisiereSpielfeld(); }
@@ -146,7 +183,52 @@ export class HomePage {
   }
 
   /**
+   * Gültigkeit des Zugs und übersprungenen Spielstein bestimmen.
+   * Es muss danach noch überprüft werden, ob an der übersprüngenen
+   * Position sich tatsächlich ein Spielstein befindet.
+   *
+   * @returns Übersprungenes Spielfeld mit Stein, oder `null` wenn
+   *          kein gültiger Zug.
+   */
+  private bestimmteUebersprungenePosition( start: Spielfeldindex,
+                                           ziel : Spielfeldindex  ): Spielfeldindex | null {
+
+    if (start.indexSpalte === ziel.indexSpalte) { // vertikaler Zug?
+
+      const deltaZeile = ziel.indexZeile - start.indexZeile;
+      if (Math.abs(deltaZeile) != 2) {
+
+        console.log(`Vertikaler Sprung mit unzulässiger Sprungweite ${deltaZeile}.`);
+        return null;
+      }
+
+      const uebersprungeneZeile = start.indexZeile + deltaZeile/2;
+
+      return new Spielfeldindex(uebersprungeneZeile, start.indexSpalte);
+
+    } else if (start.indexZeile === ziel.indexZeile) { // horizontaler Zug?
+
+      const deltaSpalte = ziel.indexSpalte - start.indexSpalte;
+      if (Math.abs(deltaSpalte) != 2) {
+
+        console.log(`Horizontaler Sprung mit unzulässiger Sprungweite ${deltaSpalte}.`);
+        return null;
+      }
+
+      const uebersprungenSpalte = start.indexSpalte + deltaSpalte/2;
+
+      return new Spielfeldindex(start.indexZeile, uebersprungenSpalte);
+
+    } else { // diagonaler Zug?
+
+      console.log("Diagonale Züge sind nicht zulässig.");
+      return null;
+    }
+  }
+
+  /**
    * Hilfsmethode um Toast anzuzeigen.
+   *
    * @param nachricht  Nachricht auf Toast.
    */
   private async zeigeToast(nachricht: string) {
