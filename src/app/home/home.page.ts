@@ -27,7 +27,8 @@ export class HomePage {
   /** Enum für Status von Spielfeldwerten auch in HTML-Datei sichtbar machen. */
   public readonly SfsEnum : typeof Sfs = Sfs;
 
-  /** Zweidimensionaler Array mit Vorlage für initialer Spielfieldzustand. */
+  /** Zweidimensionaler Array mit Vorlage für initialen Spielfieldzustand. */
+
   private readonly SPIELFELD_VORLAGE : Sfs[][] =
   [
       [ Sfs.KEIN_FELD, Sfs.KEIN_FELD, Sfs.BESETZT, Sfs.BESETZT, Sfs.BESETZT, Sfs.KEIN_FELD, Sfs.KEIN_FELD ],
@@ -38,6 +39,20 @@ export class HomePage {
       [ Sfs.KEIN_FELD, Sfs.KEIN_FELD, Sfs.BESETZT, Sfs.BESETZT, Sfs.BESETZT, Sfs.KEIN_FELD, Sfs.KEIN_FELD ],
       [ Sfs.KEIN_FELD, Sfs.KEIN_FELD, Sfs.BESETZT, Sfs.BESETZT, Sfs.BESETZT, Sfs.KEIN_FELD, Sfs.KEIN_FELD ]
   ];
+
+  // Zum Testen für Erkennung von "Spiel gewonnen"
+  /*
+  private readonly SPIELFELD_VORLAGE : Sfs[][] =
+  [
+    [ Sfs.KEIN_FELD, Sfs.KEIN_FELD, Sfs.LEER   , Sfs.LEER, Sfs.LEER, Sfs.KEIN_FELD, Sfs.KEIN_FELD ],
+    [ Sfs.KEIN_FELD, Sfs.KEIN_FELD, Sfs.LEER   , Sfs.LEER, Sfs.LEER, Sfs.KEIN_FELD, Sfs.KEIN_FELD ],
+    [ Sfs.LEER     , Sfs.LEER     , Sfs.LEER   , Sfs.LEER, Sfs.LEER, Sfs.LEER     , Sfs.LEER      ],
+    [ Sfs.LEER     , Sfs.BESETZT  , Sfs.BESETZT, Sfs.LEER, Sfs.LEER, Sfs.LEER     , Sfs.LEER      ],
+    [ Sfs.LEER     , Sfs.LEER     , Sfs.LEER   , Sfs.LEER, Sfs.LEER, Sfs.LEER     , Sfs.LEER      ],
+    [ Sfs.KEIN_FELD, Sfs.KEIN_FELD, Sfs.LEER   , Sfs.LEER, Sfs.LEER, Sfs.KEIN_FELD, Sfs.KEIN_FELD ],
+    [ Sfs.KEIN_FELD, Sfs.KEIN_FELD, Sfs.LEER   , Sfs.LEER, Sfs.LEER, Sfs.KEIN_FELD, Sfs.KEIN_FELD ]
+  ]; */
+
 
   /**
    * Zweidimensionaler Array mit Vorlage für initialer Spielfieldzustand;
