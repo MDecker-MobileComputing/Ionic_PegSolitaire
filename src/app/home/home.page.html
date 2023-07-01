@@ -17,13 +17,11 @@
           <span *ngSwitchCase="SfsEnum.KEIN_FELD"></span>
 
           <ion-button *ngSwitchCase="SfsEnum.BESETZT"
-                      expand="full"
                       color="danger"
                       [disabled]="disabledArray[indexZeile][indexSpalte]"
                       (click)="onSpielsteinKlick(indexZeile,indexSpalte)"></ion-button>
 
           <ion-button *ngSwitchCase="SfsEnum.LEER"
-                      expand="full"
                       color="dark"
                       (click)="onLeerFeldKlick(indexZeile,indexSpalte)"></ion-button>
 
