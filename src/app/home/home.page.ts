@@ -79,8 +79,8 @@ export class HomePage {
   /**
    * Konstruktor für Dependency Injection, initialisiert Spielfeld.
    */
-  constructor(private alertController: AlertController,
-              private toastController: ToastController) {
+  constructor( private alertController: AlertController,
+               private toastController: ToastController ) {
 
     this.initialisiereSpielfeld();
   }
@@ -96,24 +96,25 @@ export class HomePage {
     this.spielfeldArray = new Array();
     this.disabledArray = new Array();
 
-    for (let zeile = 0; zeile < this.SPIELFELD_VORLAGE.length; zeile++) {
+    for ( let zeile = 0; zeile < this.SPIELFELD_VORLAGE.length; zeile++ ) {
 
       this.spielfeldArray[ zeile ] = new Array();
-      this.disabledArray[ zeile]   = new Array();
+      this.disabledArray[  zeile]  = new Array();
 
-      for (let spalte = 0; spalte < this.SPIELFELD_VORLAGE[zeile].length; spalte++) {
+      for ( let spalte = 0; spalte < this.SPIELFELD_VORLAGE[zeile].length; spalte++ ) {
 
-        this.spielfeldArray[zeile][spalte] = this.SPIELFELD_VORLAGE[zeile][spalte];
-        this.disabledArray[zeile][spalte]  = false;
+        this.spielfeldArray[ zeile ][ spalte ] = this.SPIELFELD_VORLAGE[zeile][spalte];
+        this.disabledArray[ zeile ][  spalte ]  = false;
 
-        if (this.SPIELFELD_VORLAGE[zeile][spalte] === Sfs.BESETZT) { this.anzahlSpielsteine ++; }
+        if ( this.SPIELFELD_VORLAGE[zeile][spalte] === Sfs.BESETZT ) { this.anzahlSpielsteine ++; }
       }
     }
 
     this.resetStartPosition();
 
-    console.log(`Spielfeld wurde initialisiert, Anzahl Spielsteine: ${this.anzahlSpielsteine}`);
+    console.log( `Spielfeld wurde initialisiert, Anzahl Spielsteine: ${this.anzahlSpielsteine}` );
   }
+
 
   /**
    * Setzt Startposition nach erfolgreichem oder abgebrochenem Spielzug zurück
@@ -121,7 +122,7 @@ export class HomePage {
    */
   private resetStartPosition() {
 
-    if (this.startPosition !== null) {
+    if ( this.startPosition !== null ) {
 
       this.disabledArray[this.startPosition.indexZeile][this.startPosition.indexSpalte] = false;
     }
@@ -132,18 +133,18 @@ export class HomePage {
   /**
    * Event-Handler-Methode für Klick auf Spielstein für Start Spielzug.
    */
-  public async onSpielsteinKlick(indexZeile: number, indexSpalte: number) {
+  public async onSpielsteinKlick( indexZeile: number, indexSpalte: number ) {
 
-    console.log(`Klick auf Spielstein: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
+    console.log( `Klick auf Spielstein: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.` );
 
-    if (this.startPosition) {
+    if ( this.startPosition ) {
 
-      this.zeigeToast("Es wurde schon ein Startfeld gewählt.");
+      this.zeigeToast( "Es wurde schon ein Startfeld gewählt." );
       this.resetStartPosition();
 
     } else {
 
-      this.startPosition = new Spielfeldindex(indexZeile, indexSpalte);
+      this.startPosition = new Spielfeldindex( indexZeile, indexSpalte );
       this.disabledArray[indexZeile][indexSpalte] = true;
     }
   }
@@ -151,39 +152,40 @@ export class HomePage {
   /**
    * Event-Handler-Methode für Klick auf leeres Spielfeld für Beendigung Spielzug.
    */
-  public async onLeerFeldKlick(indexZeile: number, indexSpalte: number) {
+  public async onLeerFeldKlick( indexZeile: number, indexSpalte: number ) {
 
-    console.log(`Klick auf leeres Feld: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.`);
+    console.log( `Klick auf leeres Feld: indexZeile=${indexZeile}, indexSpalte=${indexSpalte}.` );
 
-    if (this.startPosition === null) {
+    if ( this.startPosition === null ) {
 
-      this.zeigeToast("Leeres Feld kann kein Startfeld sein.");
+      this.zeigeToast( "Leeres Feld kann kein Startfeld sein." );
 
     } else {
 
-      const zielPosition = new Spielfeldindex(indexZeile, indexSpalte);
+      const zielPosition = new Spielfeldindex( indexZeile, indexSpalte );
 
-      const uebersprungenPos = this.bestimmteUebersprungenePosition(this.startPosition, zielPosition);
-      if (uebersprungenPos === null) {
+      const uebersprungenPos = this.bestimmteUebersprungenePosition( this.startPosition, zielPosition );
+      if ( uebersprungenPos === null ) {
 
-        this.zeigeToast("Ungültiger Zug.");
+        this.zeigeToast( "Ungültiger Zug." );
         this.resetStartPosition();
         return;
       }
 
       const statusUebersprungenePos = this.spielfeldArray[uebersprungenPos.indexZeile][uebersprungenPos.indexSpalte];
-      if (statusUebersprungenePos === Sfs.BESETZT) {
+      if ( statusUebersprungenePos === Sfs.BESETZT ) {
 
-        this.sprungDurchfuehren(this.startPosition, uebersprungenPos, zielPosition);
+        this.sprungDurchfuehren( this.startPosition, uebersprungenPos, zielPosition );
 
       } else {
 
-        console.log("Übersprungene Position enthält keinen Spielstein.");
+        console.log( "Übersprungene Position enthält keinen Spielstein." );
         this.resetStartPosition();
-        this.zeigeToast("Ungültiger Zug.");
+        this.zeigeToast( "Ungültiger Zug." );
       }
     }
   }
+
 
   /**
    * Führt Sprung durch. Diese Methode darf nur für gültige Züge aufgerufen werden!
@@ -201,9 +203,9 @@ export class HomePage {
     this.resetStartPosition();
     this.anzahlSpielsteine--;
 
-    if (this.anzahlSpielsteine === 1) {
+    if ( this.anzahlSpielsteine === 1 ) {
 
-      this.zeigeDialog("Erfolg", "Sie haben das Spiel gewonnen!");
+      this.zeigeDialog( "Erfolg", "Sie haben das Spiel gewonnen!" );
     }
   }
 
@@ -229,6 +231,7 @@ export class HomePage {
     alert.present();
   }
 
+
   /**
    * Gültigkeit des Zugs und übersprungenen Spielstein bestimmen.
    * Es muss danach noch überprüft werden, ob an der übersprüngenen
@@ -243,42 +246,43 @@ export class HomePage {
     if (start.indexSpalte === ziel.indexSpalte) { // vertikaler Zug?
 
       const deltaZeile = ziel.indexZeile - start.indexZeile;
-      if (Math.abs(deltaZeile) != 2) {
+      if ( Math.abs(deltaZeile) != 2 ) {
 
-        console.log(`Vertikaler Sprung mit unzulässiger Sprungweite ${deltaZeile}.`);
+        console.log( `Vertikaler Sprung mit unzulässiger Sprungweite ${deltaZeile}.` );
         return null;
       }
 
       const uebersprungeneZeile = start.indexZeile + deltaZeile/2;
 
-      return new Spielfeldindex(uebersprungeneZeile, start.indexSpalte);
+      return new Spielfeldindex( uebersprungeneZeile, start.indexSpalte );
 
-    } else if (start.indexZeile === ziel.indexZeile) { // horizontaler Zug?
+    } else if ( start.indexZeile === ziel.indexZeile ) { // horizontaler Zug?
 
       const deltaSpalte = ziel.indexSpalte - start.indexSpalte;
-      if (Math.abs(deltaSpalte) != 2) {
+      if ( Math.abs( deltaSpalte ) != 2 ) {
 
-        console.log(`Horizontaler Sprung mit unzulässiger Sprungweite ${deltaSpalte}.`);
+        console.log( `Horizontaler Sprung mit unzulässiger Sprungweite ${deltaSpalte}.` );
         return null;
       }
 
       const uebersprungenSpalte = start.indexSpalte + deltaSpalte/2;
 
-      return new Spielfeldindex(start.indexZeile, uebersprungenSpalte);
+      return new Spielfeldindex( start.indexZeile, uebersprungenSpalte );
 
     } else { // diagonaler Zug?
 
-      console.log("Diagonale Züge sind nicht zulässig.");
+      console.log( "Diagonale Züge sind nicht zulässig." );
       return null;
     }
   }
+
 
   /**
    * Hilfsmethode um Toast anzuzeigen.
    *
    * @param nachricht  Nachricht auf Toast.
    */
-  private async zeigeToast(nachricht: string) {
+  private async zeigeToast( nachricht: string ) {
 
     const toast =
           await this.toastController.create({
@@ -289,13 +293,14 @@ export class HomePage {
     await toast.present();
   }
 
+
   /**
-   * Hilfsmethode um Dialog anzuzeigen
+   * Hilfsmethode um Dialog anzuzeigen.
    *
    * @param titel Titel von Dialog
    * @param nachricht  Nachricht auf Dialog
    */
-  private async zeigeDialog(titel: string, nachricht: string) {
+  private async zeigeDialog( titel: string, nachricht: string ) {
 
     const meinAlert =
           await this.alertController.create({
