@@ -21,7 +21,7 @@ How to solve this game is described [here](https://www.wikihow.com/Win-the-Peg-S
 
 <br>
 
-![Screenshot 1](screenshot_1.png)  ![Screenshot 2](screenshot_2.png)
+![Screenshot 1](screenshot_1.png)  &nbsp; ![Screenshot 2](screenshot_2.png)
 
 ![Screenshot 3](screenshot_3.png)
 
