@@ -3,19 +3,8 @@ import { Component } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 
 import { Spielfeldindex } from '../spielfeldindex';
+import { Sfs } from '../sfsEnum';
 
-
-/**
- * Eigener Aufzählungstyp für SpielFeldStatus.
- */
-enum Sfs {
-
-    KEIN_FELD, /** Zellen im GridLayout außerhalb des Rands haben diesen Zustand. */
-
-    LEER, /** Spielfeld hat keinen Spielstein */
-
-    BESETZT /** Spielfeld hat einen Spielstein */
-}
 
 @Component({
   selector: 'app-home',
