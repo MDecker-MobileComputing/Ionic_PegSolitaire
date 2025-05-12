@@ -10,6 +10,7 @@ import { Sfs } from '../sfsEnum';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  standalone: false
 })
 export class HomePage {
 
@@ -17,7 +18,6 @@ export class HomePage {
   public readonly SfsEnum : typeof Sfs = Sfs;
 
   /** Zweidimensionaler Array mit Vorlage für initialen Spielfieldzustand. */
-
   private readonly SPIELFELD_VORLAGE : Sfs[][] =
   [
       [ Sfs.KEIN_FELD, Sfs.KEIN_FELD, Sfs.BESETZT, Sfs.BESETZT, Sfs.BESETZT, Sfs.KEIN_FELD, Sfs.KEIN_FELD ],
@@ -57,13 +57,16 @@ export class HomePage {
    */
   public disabledArray : boolean[][] = [[]];
 
+
   /** Aktuelle Anzahl der Spielsteine auf dem Feld. */
   public anzahlSpielsteine : number = 0;
+
 
   /**
    * Startposition eines Spielzugs, nämlich Feld mit Spielstein der "springen" soll;
    * wenn Wert `null` dann wurde kein Spielzug gestartet. */
   private startPosition : Spielfeldindex | null = null;
+
 
   /**
    * Konstruktor für Dependency Injection, initialisiert Spielfeld.
@@ -73,6 +76,7 @@ export class HomePage {
 
     this.initialisiereSpielfeld();
   }
+
 
   /**
    * Spielfeld in Ausgangszustand versetzen. Kopiert `SPIELFELD_VORLAGE` in`spielfeldArray`.
@@ -119,6 +123,7 @@ export class HomePage {
     this.startPosition = null;
   }
 
+
   /**
    * Event-Handler-Methode für Klick auf Spielstein für Start Spielzug.
    */
@@ -137,6 +142,7 @@ export class HomePage {
       this.disabledArray[indexZeile][indexSpalte] = true;
     }
   }
+
 
   /**
    * Event-Handler-Methode für Klick auf leeres Spielfeld für Beendigung Spielzug.
@@ -198,6 +204,7 @@ export class HomePage {
     }
   }
 
+  
   /**
    * Event-Handler für Button "Neues Spiel" in Toolbar.
    */
@@ -287,6 +294,7 @@ export class HomePage {
    * Hilfsmethode um Dialog anzuzeigen.
    *
    * @param titel Titel von Dialog
+   * 
    * @param nachricht  Nachricht auf Dialog
    */
   private async zeigeDialog( titel: string, nachricht: string ) {
