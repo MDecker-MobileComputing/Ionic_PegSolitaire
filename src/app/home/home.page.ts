@@ -159,7 +159,7 @@ export class HomePage {
 
       const zielPosition = new Spielfeldindex( indexZeile, indexSpalte );
 
-      const uebersprungenPos = this.bestimmteUebersprungenePosition( this.startPosition, zielPosition );
+      const uebersprungenPos = this.bestimmeUebersprungenePosition( this.startPosition, zielPosition );
       if ( uebersprungenPos === null ) {
 
         this.zeigeToast( "Ungültiger Zug." );
@@ -204,7 +204,7 @@ export class HomePage {
     }
   }
 
-  
+
   /**
    * Event-Handler für Button "Neues Spiel" in Toolbar.
    */
@@ -236,8 +236,8 @@ export class HomePage {
    * @returns Übersprungenes Spielfeld mit Stein, oder `null` wenn
    *          kein gültiger Zug.
    */
-  private bestimmteUebersprungenePosition( start: Spielfeldindex,
-                                           ziel : Spielfeldindex ): Spielfeldindex | null {
+  private bestimmeUebersprungenePosition( start: Spielfeldindex,
+                                          ziel : Spielfeldindex ): Spielfeldindex | null {
 
     if (start.indexSpalte === ziel.indexSpalte) { // vertikaler Zug?
 
@@ -294,7 +294,7 @@ export class HomePage {
    * Hilfsmethode um Dialog anzuzeigen.
    *
    * @param titel Titel von Dialog
-   * 
+   *
    * @param nachricht  Nachricht auf Dialog
    */
   private async zeigeDialog( titel: string, nachricht: string ) {
