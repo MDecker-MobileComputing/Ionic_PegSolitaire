@@ -87,17 +87,17 @@ export class HomePage {
     this.anzahlSpielsteine = 0;
 
     this.spielfeldArray = new Array();
-    this.disabledArray = new Array();
+    this.disabledArray  = new Array();
 
     for ( let zeile = 0; zeile < this.SPIELFELD_VORLAGE.length; zeile++ ) {
 
       this.spielfeldArray[ zeile ] = new Array();
-      this.disabledArray[  zeile]  = new Array();
+      this.disabledArray[  zeile ] = new Array();
 
       for ( let spalte = 0; spalte < this.SPIELFELD_VORLAGE[zeile].length; spalte++ ) {
 
         this.spielfeldArray[ zeile ][ spalte ] = this.SPIELFELD_VORLAGE[zeile][spalte];
-        this.disabledArray[ zeile ][  spalte ]  = false;
+        this.disabledArray[ zeile  ][ spalte ]  = false;
 
         if ( this.SPIELFELD_VORLAGE[zeile][spalte] === Sfs.BESETZT ) { this.anzahlSpielsteine ++; }
       }
@@ -187,9 +187,9 @@ export class HomePage {
    * Es wird auch überprüft, ob das Spiel gewonnen wurde, also nur ein Stein übrigt
    * ist.
    */
-  private sprungDurchfuehren( startPos: Spielfeldindex,
+  private sprungDurchfuehren( startPos      : Spielfeldindex,
                               uebersprungPos: Spielfeldindex,
-                              zielPos: Spielfeldindex) {
+                              zielPos       : Spielfeldindex ) {
 
     this.spielfeldArray[startPos.indexZeile][startPos.indexSpalte]             = Sfs.LEER;
     this.spielfeldArray[uebersprungPos.indexZeile][uebersprungPos.indexSpalte] = Sfs.LEER;
@@ -239,7 +239,7 @@ export class HomePage {
   private bestimmeUebersprungenePosition( start: Spielfeldindex,
                                           ziel : Spielfeldindex ): Spielfeldindex | null {
 
-    if (start.indexSpalte === ziel.indexSpalte) { // vertikaler Zug?
+    if ( start.indexSpalte === ziel.indexSpalte ) { // vertikaler Zug?
 
       const deltaZeile = ziel.indexZeile - start.indexZeile;
       if ( Math.abs(deltaZeile) != 2 ) {
