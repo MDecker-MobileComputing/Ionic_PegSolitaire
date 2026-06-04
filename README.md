@@ -1,17 +1,17 @@
-# Peg Solitaire with Ionic #
+# Spiel "Peg Solitaire" mit Ionic #
 
 <br>
 
-This repository contains a simple implementation of the board game [Peg Solitaire](https://en.wikipedia.org/wiki/Peg_solitaire)
-as [Ionic app](https://ionicframework.com/) with Angular.
+Dieses Repository enthält eine einfache Implementierung des Brettspiels [Peg Solitaire](https://de.wikipedia.org/wiki/Solit%C3%A4r_(Brettspiel))
+mit Ionic/Angular.
 
 <br>
 
-See [this repository](https://github.com/MDecker-MobileComputing/Android_PegSolitaire) for the same game as native Android app.
+Siehe [dieses Repository](https://github.com/MDecker-MobileComputing/Android_PegSolitaire) für eine Implementierung des Spiels als native Android-App mit Java.
 
 <br>
 
-How to solve this game is described [here](https://www.wikihow.com/Win-the-Peg-Solitaire-Game-(English-Board)).
+Anleitung, wie man das Spiel löst: [siehe hier (auf Englisch)](https://www.wikihow.com/Win-the-Peg-Solitaire-Game-(English-Board))
 
 <br>
 
